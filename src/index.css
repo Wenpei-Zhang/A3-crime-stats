@@ -2,3 +2,7 @@
     stroke: steelblue;
     fill: #FFF;
   }
+
+svg {
+	overflow: visible;
+}
