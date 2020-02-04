@@ -5,13 +5,18 @@ var policeDistricts = {
 }; 
 
 // Width and height
-var w = 400;
-var h = 500;
+var w = 500;
+var h = 600;
+
+var chicagoLat = 41.881832;
+var chicagoLong = 87.623177;
 
 // Define map projection
-var projection = d3.geoAlbersUsa()
-           .translate([w/90, (3*h)/4 ])
-           .scale([5000]);
+var projection = d3.geoAlbers()
+           .translate([w/2, h/2 ])
+           .scale([60000])
+           .center([0,chicagoLat])
+           .rotate([chicagoLong,0]);
 
 // Define path generator
 var path = d3.geoPath()
