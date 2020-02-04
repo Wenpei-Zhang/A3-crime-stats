@@ -33,5 +33,20 @@ svg.selectAll("path")
    .data(policeDistricts.features)
    .enter()
    .append("path")
-   .attr("d", path);
+   .attr("d", path)
+   .attr("class", "district")
+   .on("mouseover", handleMouseOver)
+   .on("mouseout", handleMouseOut);
+
+function handleMouseOver(d, i) { 
+  // Use D3 to select element, change color and size
+  //console.log("mouse", this);
+  d3.select(this).style("fill", "blue");
+}
+
+function handleMouseOut(d, i) { 
+  // Use D3 to select element, change color and size
+  //console.log("mouse", this);
+  d3.select(this).style("fill", "#d3d3d3");
+}
 
