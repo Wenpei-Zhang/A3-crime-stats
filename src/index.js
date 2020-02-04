@@ -46,11 +46,12 @@ svg.selectAll("path")
     return d.properties.dist_num;
    })
    .on("mouseover", handleMouseOver)
-   .on("mouseout", handleMouseOut);
+   .on("mouseout", handleMouseOut)
+   .on("click", handleClick);
 
 function handleMouseOver(d, i) { 
   // Use D3 to select element, change color and size
-  console.log("mouse over", this.id);
+  d3.select("p").text('District ' + this.id);
   d3.select(this).style("fill", "blue");
 }
 
@@ -60,3 +61,15 @@ function handleMouseOut(d, i) {
   d3.select(this).style("fill", "#d3d3d3");
 }
 
+function handleClick(d, i) { 
+  // Use D3 to perform action on click event
+  var url;
+  if(i < 10) {
+    url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=00' + this.id;
+  } else {
+    url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=0' + this.id;
+  }
+  d3.json(url, function(data) {
+    console.log(data);
+  });
+}
