@@ -73,3 +73,23 @@ function handleClick(d, i) {
     console.log(data);
   });
 }
+
+
+/* for user list the dropdown list */
+function dropButton() {
+  document.getElementById("letdrop").classList.toggle("show");
+}
+
+// listten the pointter move in out of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropDown')) {
+    var dropdowns = document.getElementsByClassName("drop_con");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
