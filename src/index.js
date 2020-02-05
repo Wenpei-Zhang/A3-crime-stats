@@ -64,7 +64,7 @@ function handleMouseOut(d, i) {
 function handleClick(d, i) { 
   // Use D3 to perform action on click event
   var url;
-  if(i < 10) {
+  if(this.id < 10) {
     url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=00' + this.id;
   } else {
     url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=0' + this.id;
