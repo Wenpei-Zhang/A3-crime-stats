@@ -10,6 +10,38 @@ for (var i = 0; i < policeDistricts.features.length; i++) {
   // Join GeoJSON on police district to other datasets here 
   
 }
+var types = [];
+d3.csv('https://data.cityofchicago.org/resource/ijzp-q8t2.csv', function(d) {
+  return {
+    type : d.primary_type
+  };
+}, function(data) {
+  var ptypes = distinctTypes(data);
+  var select = d3.select(".dropdownB")
+      .append("select")
+
+    select
+      .on("change", function(d) {
+        var value = d3.select(this).property("value");
+        d3.select(".changeText").text("filter by " + value);
+      });
+
+    select.selectAll("option")
+        .data(ptypes)
+        .enter()
+        .append("option")
+        .attr("value", function (d) { return d; })
+        .text(function (d) { return d; });
+});
+
+function distinctTypes(rows) {
+  for(var i = 0; i < rows.length; i++) {
+    types[i] = rows[i].type;
+  }
+  types = [...new Set(types)];
+  console.log(types);
+  return types;
+}
 
 // Width and height
 var w = 500;
@@ -46,12 +78,11 @@ svg.selectAll("path")
     return d.properties.dist_num;
    })
    .on("mouseover", handleMouseOver)
-   .on("mouseout", handleMouseOut)
-   .on("click", handleClick);
+   .on("mouseout", handleMouseOut);
 
 function handleMouseOver(d, i) { 
   // Use D3 to select element, change color and size
-  d3.select("p").text('District ' + this.id);
+  d3.select(".changeText").text('District ' + this.id);
   d3.select(this).style("fill", "blue");
 }
 
@@ -61,25 +92,12 @@ function handleMouseOut(d, i) {
   d3.select(this).style("fill", "#d3d3d3");
 }
 
-function handleClick(d, i) { 
-  // Use D3 to perform action on click event
-  var url;
-  if(this.id < 10) {
-    url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=00' + this.id;
-  } else {
-    url = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?district=0' + this.id;
-  }
-  d3.json(url, function(data) {
-    console.log(data);
-  });
-}
-
 /* for user list the dropdown list */
 function dropButton() {
   document.getElementById("letdrop").classList.toggle("show");
 }
 
-// listten the pointter move in out of it
+// listten the pointer move in out of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropDown')) {
     var dropdowns = document.getElementsByClassName("drop_con");
