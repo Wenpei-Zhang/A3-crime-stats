@@ -74,7 +74,6 @@ function handleClick(d, i) {
   });
 }
 
-
 /* for user list the dropdown list */
 function dropButton() {
   document.getElementById("letdrop").classList.toggle("show");
