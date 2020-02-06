@@ -82,7 +82,7 @@ svg.selectAll("path")
 
 function handleMouseOver(d, i) { 
   // Use D3 to select element, change color and size
-  d3.select(".changeText").text('District ' + this.id);
+  d3.select("p").text('District ' + this.id);
   d3.select(this).style("fill", "blue");
 }
 
