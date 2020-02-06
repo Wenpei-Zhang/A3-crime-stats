@@ -6,26 +6,21 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <h1>Chicago Crime Statistics 2001 - Present</h1>
-    <p>District Info</p>
-    <p><div class="dropdownB">
-      <button onclick="dropButton()" class="dropDown">Data Filter</button>
-      <div id="letdrop" class="drop_con">
-        <a href="#">Number of Crime</a>
-        <a href="#">Per Day</a>
-        <a href="#">Per Month</a>
-        <a href="#">Per Year</a>
+    <p>
+      District Info
+      <div class="dropdownB">
+        <button onclick="dropButton()" class="dropDown">Data Filter</button>      
       </div>
-      
-    </div></p>
+    </p>
     <script src="./index.js"></script>
     <div class="container">
       <div class="info"></div>
-      <div class="map">
-        <svg class="chart"></svg>
+      <div id="map" class="map">
       </div>
     </div>
     <div class="nav-bottom">
