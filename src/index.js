@@ -7,32 +7,53 @@ var policeDistricts = {
 var districtNum = [];
 for (var i = 0; i < policeDistricts.features.length; i++) {
   // districtNum[i] = policeDistricts.features[i].properties.dist_num;
-  // Join GeoJSON on police district to other datasets here 
 }
-// console.log(districtNum);
+
+var year;
+var curType;
+
+var years = ["Select Year", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"];
+
+var selectYear = d3.select(".dropdown")
+    .append("select");
+
+    selectYear
+      .on("change", function(d) {
+        var value = d3.select(this).property("value");
+        updateYear(value);
+        updateMap(curType, value);
+      });
+
+    selectYear.selectAll("option")
+        .data(years)
+        .enter()
+        .append("option")
+        .attr("class", "dropdown")
+        .attr("value", function (d) { return d; })
+        .text(function (d) { return d; });
 
 var types = [];
-
 d3.csv('https://data.cityofchicago.org/resource/ijzp-q8t2.csv', function(d) {
   return {
     type : d.primary_type
   };
 }, function(data) {
   var ptypes = distinctTypes(data);
-  var select = d3.select(".dropdownB")
-      .append("select")
+  var select = d3.select(".dropdown")
+      .append("select");
 
     select
       .on("change", function(d) {
         var value = d3.select(this).property("value");
-        d3.select(".changeText").text("filter by " + value);
-        updateMap(value);
+        updateType(value);
+        updateMap(value, year);
       });
 
     select.selectAll("option")
         .data(ptypes)
         .enter()
         .append("option")
+        .attr("class", "dropdown")
         .attr("value", function (d) { return d; })
         .text(function (d) { return d; });
 });
@@ -47,17 +68,25 @@ function distinctTypes(rows) {
   return types;
 }
 
+function updateYear(value) {
+  year = value;
+}
+
+function updateType(value) {
+  curType = value;
+}
+
 // Width and height
-var w = 700;
-var h = 650;
+var w = 650;
+var h = 600;
 
 var chicagoLat = 41.881832;
 var chicagoLong = 87.623177;
 
 // Define map projection
 var projection = d3.geoAlbers()
-           .translate([w/2, h/2 ])
-           .scale([60000])
+           .translate([w/2, h/3 ])
+           .scale([69000])
            .center([0,chicagoLat])
            .rotate([chicagoLong,0]);
 
@@ -84,11 +113,11 @@ var map = svg.selectAll("path")
           return d.properties.dist_num;
         })
         .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
+        .on("mouseout", handleMouseOut)
+        .on("click", handleMouseClick);
 
 function handleMouseOver(d, i) { 
   // Use D3 to select element, change color and size
-  d3.select("p").text('District ' + this.id);
   d3.select(this).style("opacity", .7);
 }
 
@@ -98,43 +127,60 @@ function handleMouseOut(d, i) {
   d3.select(this).style("opacity", 1);
 }
 
-function updateMap(value) {
-  //use the value to update the map?
-  //depending on what the value is for the year slider, pull different data
-  d3.csv('https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$limit=10000', function(d) {
-    return {
-      district : d.district,
-      type : d.primary_type
-    };
-  }, function(data) {
-    console.log(data);
-    var h = 0;
-    for(var i = 0; i < data.length; i++) {
-      if(data[i].type === value) {
-        var disInt = parseInt(data[i].district, 10);
-        if(datamap.has(disInt)) {
-          datamap.set(disInt, datamap.get(disInt) + 1);
-        } else {
-          datamap.set(disInt, 1);
+function handleMouseClick(d, i) {
+  var pint = parseInt(d.properties.dist_num, 10);
+  if(datamap.get(pint) === undefined) {
+    d3.select("#info").text('In police district '+ d.properties.dist_num +' there were no \'' + curType.toLowerCase() + '\' crimes in ' + year);
+  } else if (datamap.get(pint) === 1){
+    d3.select("#info").text('In police district '+ d.properties.dist_num +' there was ' + datamap.get(pint) + ' \'' + curType.toLowerCase() + '\' crimes in ' + year);
+  } else {
+    d3.select("#info").text('In police district '+ d.properties.dist_num +' there were ' + datamap.get(pint) + ' \'' + curType.toLowerCase() + '\' type crimes in ' + year);
+  }
+}
+  
+
+function updateMap(type, year) {
+  if(year != undefined && type != undefined) {
+    //use the value to update the map?
+    //depending on what the value is for the year slider, pull different data
+    d3.csv('https://data.cityofchicago.org/resource/ijzp-q8t2.csv?year='+ year +'&primary_type=' + type + '&$limit=100000', function(d) {
+      return {
+        district : d.district,
+        type : d.primary_type,
+        desc : d.description
+      };
+    }, function(data) {
+      console.log(data);
+      var h = 0;
+      for(var i = 0; i < data.length; i++) {
+        if(data[i].type === type) {
+          var disInt = parseInt(data[i].district, 10);
+          if(datamap.has(disInt)) {
+            datamap.set(disInt, datamap.get(disInt) + 1);
+          } else {
+            datamap.set(disInt, 1);
+          }
         }
       }
-    }
-    var colorScale =d3.scaleThreshold()
-        .domain([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) // TODO: this range will be dependent?? handle later
-        .range(d3.schemeBlues[9]);
-    console.log(datamap);
-    svg.selectAll('path')
-       .style('fill', function (d) {
-          var pint = parseInt(d.properties.dist_num, 10);
-          var color = datamap.get(pint);
-          if(isNaN(color)) {
-            return "#d3d3d3";
-          } else {
-            return colorScale(color);
-          }
-       });
-  });
-  datamap.clear();
+      //TODO: For Aeron
+      var min = Math.min(...datamap.values());
+      var max = Math.max(...datamap.values());
+      var colorScale =d3.scaleQuantile()
+          .domain([min, max])
+          .range(d3.schemeBlues[9]);
+      svg.selectAll('path')
+        .style('fill', function (d) {
+            var pint = parseInt(d.properties.dist_num, 10);
+            var color = datamap.get(pint);
+            if(isNaN(color)) {
+              return "#d3d3d3";
+            } else {
+              return colorScale(color);
+            }
+        });
+    });
+    datamap.clear();
+  }
 }
 
 /* for user list the dropdown list */

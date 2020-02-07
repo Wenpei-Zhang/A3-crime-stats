@@ -9,20 +9,11 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <link rel="stylesheet" href="index.css">
   </head>
-  <body>
-    <h1>Chicago Crime Statistics 2001 - Present</h1>
-    <p>
-      District Info
-      <div class="dropdownB">
-        <button onclick="dropButton()" class="dropDown">Data Filter</button>      
-      </div>
-    </p>
+  <body class="container">
+    <h1 class="header">Chicago Crime Type Statistics 2001 - Present</h1>
+    <div class="dropdown"></div>
+    <h3 id="info" class="header"></h3>
     <script src="./index.js"></script>
-    <div class="container">
-      <div class="info"></div>
-      <div id="map" class="map">
-      </div>
-    </div>
     <div class="nav-bottom">
       <a href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5cd6-ry5g">source</a>
     </div>
