@@ -1,7 +1,17 @@
 .container {
   display: block;
 }
-
+h1{
+  font-size: 3em;
+  font-weight: 700;
+  color: #0099FF;
+}
+a{
+  color: #333399;
+}
+a:hover{
+  color: #FF0099;
+}
 .district {
 	fill: #d3d3d3;
 	stroke: white;
@@ -26,9 +36,15 @@ svg {
 select {
   width: 25%;
   display: flex;
-  flex-wrap: wrap;
   align-content: center;
+  flex-wrap: wrap;
   margin: 0 auto;
+  color: #FF0099;
+  padding: 10px;
+  font-size: 16px;
+  
+  cursor: pointer;
+  background-color: #f1f1f1;
 }
 
 /* Drop Down list */
@@ -48,8 +64,14 @@ select {
 }
 
 /* The container <div> - needed the Drop Down content */
-.dropdownB {
+.dropDown {
+ 
+  width: 25%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
   display: inline-block;
+  margin: 0 auto;
 }
 
 /* Drop down Content Hiden*/

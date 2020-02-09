@@ -5,9 +5,9 @@ var policeDistricts = {
 }; 
 
 var districtNum = [];
-for (var i = 0; i < policeDistricts.features.length; i++) {
+/*for (var i = 0; i < policeDistricts.features.length; i++) {
   // districtNum[i] = policeDistricts.features[i].properties.dist_num;
-}
+}*/
 
 var year;
 var curType;
@@ -62,9 +62,9 @@ function distinctTypes(rows) {
   for(var i = 0; i < rows.length; i++) {
     types[i] = rows[i].type;
   }
-  types = [...new Set(types)];
+ /* types = [...new Set(types)];*/
   types.unshift("Select Type of Crime");
-  console.log(types);
+  /*console.log(types);*/
   return types;
 }
 
