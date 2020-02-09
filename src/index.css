@@ -10,7 +10,17 @@
 .header {
   text-align: center;
 }
-
+h1{
+  font-size: 3em;
+  font-weight: 700;
+  color: #0099FF;
+}
+a{
+  color: #333399;
+}
+a:hover{
+  color: #FF0099;
+}
 .nav-bottom {
   width: 100%;
   text-align: center;
@@ -29,7 +39,6 @@ select {
   align-content: center;
   flex-wrap: wrap;
   margin: 0 auto;
-  color: #FF0099;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
