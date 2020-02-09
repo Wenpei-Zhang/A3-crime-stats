@@ -26,9 +26,14 @@ svg {
 select {
   width: 25%;
   display: flex;
-  flex-wrap: wrap;
   align-content: center;
+  flex-wrap: wrap;
   margin: 0 auto;
+  color: #FF0099;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #f1f1f1;
 }
 
 /* Drop Down list */
