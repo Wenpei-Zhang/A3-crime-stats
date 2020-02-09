@@ -158,10 +158,13 @@ function updateMap(type, year) {
         }
       }
 
-      numColors = 5; 
-      //TODO: For Aeron
       var min = Math.min(...datamap.values());
       var max = Math.max(...datamap.values());
+      numColors = 5; 
+      if (max - min < 5) {
+        numColors = max - min;
+      }
+
       var colorScale = d3.scaleQuantile()
           .domain([min, max])
           .range(d3.schemeBlues[numColors]);
@@ -176,12 +179,14 @@ function updateMap(type, year) {
             }
         });
 
+        d3.select("#legend").remove();
+
         // Create Legend
         var svgLegend = d3.select("body")
           .append("svg")
+          .attr("id", "legend")
           .attr("width", 200)
-          .attr("height", 800);
-
+          .attr("height", 200);
 
         var legend_data = [];
         var difference = (max - min) / numColors;
@@ -190,18 +195,29 @@ function updateMap(type, year) {
         }
 
         var legend_box_size = 20
-        svgLegend.selectAll("mydots")
+        svgLegend.selectAll("legendSquares")
           .data(legend_data)
           .enter()
           .append("rect")
-            .attr("x", 100)
-            .attr("y", function(d,i){ return 100 + i*(legend_box_size+5)}) 
+            .attr("x", 10)
+            .attr("y", function(d,i){ return 10 + i*(legend_box_size+5)}) 
             .attr("width", legend_box_size)
             .attr("height", legend_box_size)
             .style("fill", function(d, i){ console.log(d); return colorScale(d)})
 
+        svgLegend.selectAll("legendLabels")
+          .data(legend_data)
+          .enter()
+          .append("text")
+            .attr("x", 10 + legend_box_size * 1.2)
+            .attr("y", function(d,i){ return 10 + i*(legend_box_size+5) + (legend_box_size/2)})
+            .text(function(d){ return (Math.floor(d - 0.1) + 1) + " - " + Math.floor(d + difference) })
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
 
-    });
+            });
+
+
     datamap.clear();
   }
 }
