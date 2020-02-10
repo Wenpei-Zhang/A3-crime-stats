@@ -197,7 +197,7 @@ function updateMap(type, year) {
         d3.select("#legend").remove();
 
         // Create Legend
-        var svgLegend = d3.select("body")
+        var svgLegend = d3.select('#saw')
           .append("svg")
           .attr("id", "legend")
           .attr("width", 200)
