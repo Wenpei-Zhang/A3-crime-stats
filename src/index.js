@@ -73,7 +73,7 @@ function updateType(value) {
 
 // Width and height
 var w = 650;
-var h = 600;
+var h = 550;
 
 var chicagoLat = 41.881832;
 var chicagoLong = 87.623177;
@@ -90,7 +90,7 @@ var path = d3.geoPath()
          .projection(projection);
 
 // Create SVG element
-var svg = d3.select("body")
+var svg = d3.select("#map")
       .append("svg")
       .attr("width", w)
       .attr("height", h);
@@ -197,7 +197,7 @@ function updateMap(type, year) {
         d3.select("#legend").remove();
 
         // Create Legend
-        var svgLegend = d3.select('#saw')
+        var svgLegend = d3.select('#legendId')
           .append("svg")
           .attr("id", "legend")
           .attr("width", 200)

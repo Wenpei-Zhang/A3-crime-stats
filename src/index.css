@@ -10,17 +10,21 @@
 .header {
   text-align: center;
 }
+
 h1{
   font-size: 3em;
   font-weight: 700;
-  color: #0099FF;
+  color: #087fc0;
 }
+
 a{
   color: #333399;
 }
+
 a:hover{
   color: #FF0099;
 }
+
 .nav-bottom {
   width: 100%;
   text-align: center;
@@ -34,11 +38,11 @@ svg {
 }
 
 select {
-  width: 25%;
+  width: 75%;
   display: flex;
   align-content: center;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 10px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
@@ -93,4 +97,26 @@ select {
 
 text, p, h1, h2, h3, h4, h5, h6 {
 	font-family: Arial;
+}
+
+.grid-container {
+  	display: grid;
+  	flex-direction: row;
+    grid-template-columns: auto auto;
+}
+
+#map {
+	grid-row: 1 / span 2;
+}
+
+#filters {
+	grid-column: 2;
+}
+
+#legendId {
+	grid-column: 2;
+}
+
+#legend {
+	margin-left:10px;
 }
