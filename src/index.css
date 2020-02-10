@@ -42,7 +42,8 @@ select {
   display: flex;
   align-content: center;
   flex-wrap: wrap;
-  margin: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
@@ -115,8 +116,14 @@ text, p, h1, h2, h3, h4, h5, h6 {
 
 #legendId {
 	grid-column: 2;
+	visibility: hidden;
 }
 
 #legend {
 	margin-left:10px;
 }
+
+#legendLabel {
+	margin-left: 10px;
+}
+

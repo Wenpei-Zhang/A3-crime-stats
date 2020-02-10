@@ -196,6 +196,7 @@ function updateMap(type, year) {
 
         d3.select("#legend").remove();
 
+        document.getElementById("legendId").style.visibility = "visible";
         // Create Legend
         var svgLegend = d3.select('#legendId')
           .append("svg")
