@@ -127,3 +127,9 @@ text, p, h1, h2, h3, h4, h5, h6 {
 	margin-left: 10px;
 }
 
+#sliderContainer {
+  text-align: right;
+  position: relative;
+  margin-right: 600px;
+  top: 160px;
+}
