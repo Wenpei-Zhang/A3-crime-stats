@@ -158,7 +158,6 @@ function updateMap(type, year) {
         }
       }
 
-console.log(d3.schemeBlues[5]);
       var colorScale;
       var min = Math.min(...datamap.values());
       var max = Math.max(...datamap.values());
